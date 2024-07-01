@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 
+    - primary meta tags
+  -->
+  <title>Ouistitis — Dashboard</title>
+  <meta name="title" content="Ouistitis — Bot Discord Multifonctions">
+  <meta name="description" content="Ouistitis simplifie la gestion de votre serveur avec des fonctionnalités avancées comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, un système de niveaux, et bien plus. Profitez de l'intégration de boutons, formulaires et menus interactifs pour une expérience utilisateur optimale. 🍌">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="icon" href="favicon.ico">
+
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+	
+  <!-- 
+    - header
+  -->
+
+<body>
+  <header class="header" data-header>
+    <div class="container">
+
+    <a href="#" class="logo">
+      <img src="Ouistitis.png" width="50" height="50" alt="Logo">
+      <h1 class="logo-text" style="color:#FFFFFF;"><b>Ouistitis</b></h1>
+    </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+		
+
+          <a href="#" class="logo"><h1><b>Ouistitis</b></h1>
+        
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+        </div>
+
+        <ul class="navbar-list">
+
+          <li>
+            <a href="./" class="navbar-link">Accueil</a>
+          </li>
+
+          <li>
+            <a href="./login" class="navbar-link">Dashboard</a>
+          </li>
+		  
+		  <li>
+            <a href="./commands" class="navbar-link">Commandes</a>
+          </li>
+		  
+		  <li>
+            <a href="https://discord.com/users/1238123562254995457" class="navbar-link">Support</a>
+          </li>
+		  
+        </ul>
+
+      </nav>
+
+      <div class="btn-group">
+        <button id="logoutBtn" class="btn btn-primary-header">Déconnexion</button>
+      </div>
+	  
+	    <img id="serverIcon" class="serverIcon" alt="Server" width="50" height="50">
+	  
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+      </button>
+
+      <div class="overlay" data-overlay data-nav-toggler></div>
+
+    </div>
+  </header>
+  
+      <!-- 
+        - #INSTRUCTION
+      -->
+
+      <section class="section-instruction" aria-label="instruction">
+        <div class="container" id="feature">
+		  
+          <h2 class="h1 section-title text-center">Anniversaires</h2>
+
+          <p class="section-text text-center">
+		Réinitialise les anniversaires enregistrés.
+          </p>
+		  
+		  <br>
+		  <br>
+		  
+<h2 class="h2 section-title text-center">
+    <button id="backBtn" class="btn btn-primary-header">Retour</button>
+</h2>
+
+<h2 class="h3 section-title text-center">
+    <div class="save-message" id="status" style="color: #ccc"></div>
+</h2>
+
+
+	<div class="birthdays-reset">
+      <h2 class="h2">Réinitialisation</h2>
+	  	<p class="section-text">Supprime l'intégralité des anniversaires enregistrés. Cette action est irréversible.</p>
+		<br>
+      <button id="resetBtn" class="btn btn-primary-levels">Réinitialiser</button>
+	  </div>
+	  
+	  		<div class="btn-group3">
+            </a>
+        </div>
+	  
+    </div>
+  </main>
+
+  <script>
+    async function resetBirthdays() {
+      const token = localStorage.getItem('serverToken');
+      const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+      if (!token || isAuthenticated !== 'true') {
+        window.location.href = './login';
+        return;
+      }
+
+      try {
+        const response = await fetch('https://api.ouistitis.online/resetBirthdays', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          document.getElementById('status').textContent = result.message;
+        } else {
+          const text = await response.text();
+          document.getElementById('status').textContent = 'Erreur: ' + text;
+        }
+      } catch (error) {
+        document.getElementById('status').textContent =
+          'Erreur lors de la réinitialisation des anniversaires : ' + error.message;
+      }
+    }
+
+    async function loadServerIcon() {
+      const token = localStorage.getItem('serverToken');
+      const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+      if (!token || isAuthenticated !== 'true') {
+        window.location.href = './login';
+        return;
+      }
+
+      try {
+        const response = await fetch('https://api.ouistitis.online/verifyToken', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          if (result.valid) {
+            const serverIcon = document.getElementById('serverIcon');
+            serverIcon.src = result.serverIcon;
+          } else {
+            localStorage.removeItem('serverToken');
+            localStorage.removeItem('isAuthenticated');
+            window.location.href = './login';
+          }
+        } else {
+          const text = await response.text();
+          console.error('Erreur de serveur:', text);
+          document.getElementById('status').textContent = 'Erreur avec le serveur';
+        }
+      } catch (error) {
+        document.getElementById('status').textContent =
+          'Erreur lors de la vérification du token : ' + error.message;
+      }
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', resetBirthdays);
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('serverToken');
+      localStorage.removeItem('isAuthenticated');
+      window.location.href = './login';
+    });
+    document.getElementById('backBtn').addEventListener('click', () => {
+      window.location.href = './dashboard';
+    });
+
+    document.addEventListener('DOMContentLoaded', loadServerIcon);
+  </script>
+</body>
+
+      <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer">
+
+  
+
+    <div class="footer-bottom">
+      <div class="container">
+
+        <p class="copyright">
+          &copy; 2024 Ouistitis — Tous droits réservés.
+        </p>
+
+        <ul class="footer-bottom-list">
+
+          <li>
+            <a href="https://discord.com/users/1238123562254995457" class="footer-bottom-link">Support</a>
+          </li>
+		  
+		    <li>
+            <a href="./privacy" class="footer-bottom-link">Politique de Confidentialité</a>
+          </li>
+		  
+		    <li>
+            <a href="./terms" class="footer-bottom-link">Conditions d'Utilisations</a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- 
+    - ionicon-link
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  
+</body>
+
+</html>
+  
+</body>
+
+</html>
