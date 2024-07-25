@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 
+    - primary meta tags
+  -->
+  <title>Ouistitis — Dashboard</title>
+  <meta name="title" content="Ouistitis — Bot Discord Multifonctions">
+  <meta name="description" content="Ouistitis simplifie la gestion de votre serveur avec des fonctionnalités avancées comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, un système de niveaux, et bien plus ! 🙈">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="icon" href="favicon.ico">
+
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+	
+  <!-- 
+    - header
+  -->
+
+<body>
+  <header class="header" data-header>
+    <div class="container">
+
+    <a href="#" class="logo">
+      <img src="Ouistitis.png" width="50" height="50" alt="Logo">
+      <h1 class="logo-text" style="color:#FFFFFF;"><b>Ouistitis</b></h1>
+    </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+		
+
+          <a href="#" class="logo"><h1><b>Ouistitis</b></h1>
+        
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+        </div>
+
+        <ul class="navbar-list">
+
+          <li>
+            <a href="./" class="navbar-link">Accueil</a>
+          </li>
+
+          <li>
+            <a href="./login" class="navbar-link">Dashboard</a>
+          </li>
+		  
+		  <li>
+            <a href="./commands" class="navbar-link">Commandes</a>
+          </li>
+		  
+		  <li>
+            <a href="https://discord.com/users/1238123562254995457" class="navbar-link">Support</a>
+          </li>
+		  
+        </ul>
+
+      </nav>
+
+      <div class="btn-group">
+        <button id="logoutBtn" class="btn btn-primary-header">Déconnexion</button>
+      </div>
+	  
+	    <img id="serverIcon" class="serverIcon" alt="Server" width="50" height="50">
+	  
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+      </button>
+
+      <div class="overlay" data-overlay data-nav-toggler></div>
+
+    </div>
+  </header>
+  
+      <!-- 
+        - #INSTRUCTION
+      -->
+
+      <section class="section-instruction" aria-label="instruction">
+        <div class="container" id="feature">
+
+          <h2 class="h1 section-title text-center">Tableau de bord</h2>
+
+          <p class="section-text text-center">
+		Explore les différentes fonctionnalités pour ton serveur. 
+          </p>
+		  
+		<br>
+		<br>		
+		  
+		<h2 class="h2 section-title text-center"><span id="serverName"></span></h2>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="instruction-card bg-gray">
+				
+				<h3 class="h3 card-title">Fonctionnalités</h3>
+				
+				<a href="./features" class="btn-link">
+                  <span class="span">Configurer</span>
+
+                  <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                </a>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="instruction-card bg-gray">
+				
+				<h3 class="h3 card-title">Niveaux</h3>
+
+				<a href="./levels" class="btn-link">
+                  <span class="span">Configurer</span>
+
+                  <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                </a>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="instruction-card bg-gray">
+				
+				<h3 class="h3 card-title">Accueil</h3>
+				
+				<a href="./welcome" class="btn-link">
+                  <span class="span">Configurer</span>
+
+                  <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                </a>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="instruction-card bg-gray">
+				
+				<h3 class="h3 card-title">Anniversaires</h3>
+				
+				<a href="./birthdays" class="btn-link">
+                  <span class="span">Configurer</span>
+
+                  <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                </a>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+	  
+		<div class="btn-group3">
+            </a>
+        </div>
+
+  <script>
+    function redirectTo(page) {
+      window.location.href = page;
+    }
+
+    function displayServerName() {
+      const serverName = localStorage.getItem('serverName');
+      const serverNameElement = document.getElementById('serverName');
+      const serverConfigElement = document.getElementById('serverConfig');
+
+      if (serverName && serverNameElement) {
+        serverNameElement.textContent = serverName;
+      } else if (serverConfigElement) {
+        serverConfigElement.textContent = 'Aucun serveur connecté.';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', displayServerName);	
+
+    async function loadConfigSelect() {
+      const token = localStorage.getItem('serverToken');
+      const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+      console.log('Token au chargement:', token);
+      console.log('isAuthenticated au chargement:', isAuthenticated);
+
+      if (!token || isAuthenticated !== 'true') {
+        console.log('Non authentifié, redirection vers login');
+        window.location.href = './login';
+        return;
+      }
+
+      try {
+        const response = await fetch('https://api.ouistitis.online/verifyToken', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token })
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Résultat JSON après vérification du token:', result);
+          if (result.valid) {
+            const serverIcon = document.getElementById('serverIcon');
+            serverIcon.src = result.serverIcon;
+            console.log('URL de l\'icône du serveur:', serverIcon.src);
+          } else {
+            console.log('Token invalide, retour à la section Connexion');
+            localStorage.removeItem('serverToken');
+            localStorage.removeItem('isAuthenticated');
+            window.location.href = './login';
+          }
+        } else {
+          console.log('Erreur avec le serveur');
+          document.getElementById('status').textContent = 'Erreur avec le serveur';
+        }
+      } catch (error) {
+        console.error('Erreur lors de la vérification du token:', error);
+        document.getElementById('status').textContent = 'Erreur lors de la vérification du token';
+      }
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      console.log('Bouton Déconnexion cliqué');
+      localStorage.removeItem('serverToken');
+      localStorage.removeItem('isAuthenticated');
+      console.log('Redirection vers login.html');
+      window.location.href = './login';
+    });
+
+    document.addEventListener('DOMContentLoaded', loadConfigSelect);
+  </script>
+  
+    <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer">
+
+    <div class="footer-bottom">
+      <div class="container">
+
+        <p class="copyright">
+          &copy; 2024 Ouistitis — Tous droits réservés.
+        </p>
+
+        <ul class="footer-bottom-list">
+
+          <li>
+            <a href="https://discord.com/users/1238123562254995457" class="footer-bottom-link">Support</a>
+          </li>
+		  
+		    <li>
+            <a href="./privacy" class="footer-bottom-link">Politique de Confidentialité</a>
+          </li>
+		  
+		    <li>
+            <a href="./terms" class="footer-bottom-link">Conditions d'Utilisations</a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- 
+    - ionicon-link
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  
+</body>
+
+</html>
+
