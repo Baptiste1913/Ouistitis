@@ -1,7 +1,7 @@
 :root {
   /* Colors */
   
-    --ultramarine-blue: hsl(147, 57%, 56%);
+  --ultramarine-blue: hsl(147, 57%, 56%);
   --silver-metallic: hsl(240, 4%, 71%);
   --fiery-rose_12: rgba(117, 187, 134, 0.096);
   --eerie-black-1: hsl(0, 0%, 4%);
@@ -237,6 +237,22 @@ body.active {
   filter: drop-shadow(0 0 80px rgba(49, 130, 86, 0.4));
   margin: 0 auto 150px;
   transition: filter 1s;
+}
+
+.btn-group-404 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  filter: drop-shadow(0 0 80px rgba(49, 130, 86, 0.4));
+  margin: 0 auto 150px;
+  transition: filter 1s;
+}
+
+.btn-group-404:hover {
+  filter: drop-shadow(0 0 80px rgba(49, 130, 86, 0.6));
+  z-index: 4;
 }
 
 .btn-group3 {
