@@ -161,8 +161,52 @@
       </section>
 
   </main>
-
   
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const token = document.getElementById('serverToken').value.trim();
+
+      try {
+        const response = await fetch('https://api.ouistitis.online/loginVerifyToken', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token })
+        });
+
+        const result = await response.json();
+        if (result.valid) {
+          localStorage.setItem('serverToken', token);
+          localStorage.setItem('isAuthenticated', 'true');
+		  localStorage.setItem('serverName', result.serverName);
+		  localStorage.setItem('dropdownServerName', result.dropdownServerName);
+          window.location.href = './dashboard';
+        } else {
+          const statusElement = document.getElementById('status');
+          const tokenInput = document.getElementById('serverToken');
+          statusElement.textContent = 'Token invalide, veuillez réessayer.';
+          statusElement.classList.remove('hidden');
+          tokenInput.classList.add('input-error');
+        }
+      } catch (error) {
+
+      }
+    });
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('serverToken');
+      const passwordIcon = document.querySelector('.toggle-password');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordIcon.textContent = '🙉';
+      } else {
+        passwordInput.type = 'password';
+        passwordIcon.textContent = '🙈';
+      }
+    }
+  </script>
+
   <!-- 
     - #FOOTER
   -->
