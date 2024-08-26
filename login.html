@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ouistitis.online/" />
+<meta property="og:title" content="Ouistitis" />
+<meta property="og:description" content="Ouistitis accélère la croissance de votre communauté grâce à ses différentes fonctionnalités comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, le système de niveaux, et plus encore !" />
+<meta property="og:image" content="https://ouistitis.online/Illustration.svg" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://ouistitis.online/" />
+<meta property="twitter:title" content="Ouistitis" />
+<meta property="twitter:description" content="Ouistitis accélère la croissance de votre communauté grâce à ses différentes fonctionnalités comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, le système de niveaux, et plus encore !" />
+<meta property="twitter:image" content="https://ouistitis.online/Illustration.svg" />
+
+  <!-- 
+    - primary meta tags
+  -->
+  
+  <title>Ouistitis - Connexion</title>
+  <meta name="title" content="Ouistitis — Bot Discord Multifonctions">
+  <meta name="description" content="Ouistitis accélère la croissance de votre communauté grâce à ses différentes fonctionnalités comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, le système de niveaux, et plus encore !">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="icon" href="favicon.ico">
+
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+	
+<!-- PRELOADER -->
+
+<div id="preloader">
+	<div class="spinner">
+		<div class="double-bounce1"></div>
+		<div class="double-bounce2"></div>
+	</div>
+</div>
+ 
+<script>
+    var loader = document.getElementById("preloader");
+    var minDisplayTime = 1000;
+    var startTime = Date.now();
+
+    document.body.style.overflow = 'hidden';
+
+    window.addEventListener("load", function () {
+        var elapsedTime = Date.now() - startTime;
+        var remainingTime = minDisplayTime - elapsedTime;
+
+        if (remainingTime > 0) {
+            setTimeout(function() {
+                loader.style.display = "none";
+                document.body.style.overflow = '';
+            }, remainingTime);
+        } else {
+            loader.style.display = "none";
+            document.body.style.overflow = '';
+        }
+    });
+</script>
+	
+  <!-- 
+    - header
+  -->
+
+<body>
+  <header class="header" data-header>
+    <div class="container">
+
+    <a href="./" class="logo">
+      <img src="Ouistitis.png" width="50" height="50" alt="Logo">
+      <h1 class="logo-text" style="color:#FFFFFF;"><b>OUISTITIS</b></h1>
+    </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+		
+
+          <a href="#" class="logo"><h1><b>Ouistitis</b></h1>
+        
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler-dash>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+        </div>
+
+        <ul class="navbar-list">
+
+          <li>
+            <a href="./" class="navbar-link">Accueil</a>
+          </li>
+
+          <li>
+            <a href="./login" class="navbar-link">Dashboard</a>
+          </li>
+		  
+        </ul>
+
+      </nav>
+
+      <div class="btn-group">
+	  
+      <!-- Menu pour les utilisateurs non connectés -->
+      <div class="nav-container" id="navContainerNotLoggedIn">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler-dash>
+		  <i class="user circle icon"></i>
+		  	<i class="chevron down icon"></i>
+        </button>
+        <ul class="dropdown-menu hidden" id="dropdownMenuDash">
+          <div class="logo-dropdown">
+            <a href="./login" class="btn btn-primary-blue" onclick="redirectToLogin()">Connexion</a>
+          </div>
+          <li><h3 class="btn-link-title">NAVIGATION</h3></li>
+          <li><a href="./" class="btn-link-desc">Accueil</a></li>
+		  <li><a href="./commands" class="btn-link-desc">Commandes</a></li>
+          <li><a href="./dashboard" class="btn-link-desc">Tableau de bord</a></li>
+		  
+        </ul>
+      </div>
+
+      <!-- Menu pour les utilisateurs connectés -->
+      <div class="nav-container" id="navContainerLoggedIn">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler-logged>
+          <img id="serverIcon" class="serverIcon hidden" alt="." width="50" height="50">
+		  	<i class="chevron down icon"></i>
+        </button>
+        <ul class="dropdown-menu hidden" id="dropdownMenuLogged">
+            <li><h3 class="btn-link-server" id="serverName"></h3></li>
+			<div class="logo-dropdown">
+
+            <button id="logoutBtn" class="btn btn-primary-blue">Déconnexion</button>
+          </div>
+          <li><h3 class="btn-link-title">NAVIGATION</h3></li>
+          <li><a href="./" class="btn-link-desc">Accueil</a></li>
+		  <li><a href="./commands" class="btn-link-desc">Commandes</a></li>
+          <li><a href="./dashboard" class="btn-link-desc">Tableau de bord</a></li>
+		  
+          <li><h3 class="btn-link-title">TABLEAU DE BORD</h3></li>
+          <li><a href="./features" class="btn-link-desc">Fonctionnalités</a></li>
+          <li><a href="./levels" class="btn-link-desc">Niveaux</a></li>
+          <li><a href="./welcome" class="btn-link-desc">Bienvenue</a></li>
+          <li><a href="./birthdays" class="btn-link-desc">Anniversaires</a></li>
+        </ul>
+      </div>
+
+      <div class="overlay" data-overlay data-nav-toggler-dash></div>
+
+      </div>
+
+    </div>
+  </header>
+  
+
+  <main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.scroll-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const target = document.querySelector(this.getAttribute('href'));
+
+      window.scrollTo({
+        top: target.offsetTop,
+        behavior: 'smooth'
+      });
+    });
+  });
+});
+</script>
+
+<div class="connexion-container form-container">
+ <div class="connexion-card">
+ 
+    <h2 class="h1 section-title text-center">Connexion</h2>
+	
+	<br>
+	<br>
+ 
+    <a class="logo-connexion">
+		<i class="user circle icon"></i>
+    </a>
+  
+        <div class="container" id="feature">
+
+  <form id="loginForm" class="form-container">
+    <div class="input-wrapper">
+      <input type="password" id="serverToken" placeholder="Identifiant" required>
+      <button class="submit-button" type="submit">
+        <ion-icon name="arrow-forward-circle" aria-hidden="true"></ion-icon>
+      </button>
+    </div>
+  </form>
+  
+  	<br>
+	<br>
+  
+            <p class="section-text text-center">
+		Connecte-toi en utilisant ton 
+          </p>
+		  
+		<p class="section-text text-center">
+		<a href="#scroll-connexion" class="scroll-link">Identifiant Ouistitis</a>
+		</p>
+		
+</div>
+</div>
+
+		
+  <div class="error-message" id="status" style="color: #FF7F50"></div>
+
+      </form>
+	  
+	  </div>
+
+		<script>
+			function openInNewWindow(event) {
+			event.preventDefault();
+			window.open('https://discord.com/oauth2/authorize?client_id=1240398531257176144&permissions=8&integration_type=0&scope=bot+applications.commands', '_blank', 'width=500,height=800');
+			}
+		</script>
+		
+		<div class="btn-group-padding">
+              </a>
+        </div>
+
+        </div>
+      </section>
+
+  </main>
+  
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+
+    if (isAuthenticated) {
+      const returnUrl = localStorage.getItem('returnUrl') || './';
+      localStorage.removeItem('returnUrl');
+      window.location.href = returnUrl;
+    }
+	
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const token = document.getElementById('serverToken').value.trim();
+
+      try {
+        const response = await fetch('https://api.ouistitis.online/loginVerifyToken', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token })
+        });
+
+        const result = await response.json();
+        if (result.valid) {
+          localStorage.setItem('serverToken', token);
+          localStorage.setItem('isAuthenticated', 'true');
+          localStorage.setItem('serverName', result.serverName);
+          localStorage.setItem('dropdownServerName', result.dropdownServerName);
+          
+          const returnUrl = localStorage.getItem('returnUrl');
+          if (returnUrl) {
+            localStorage.removeItem('returnUrl');
+            window.location.href = returnUrl;
+          } else {
+            window.location.href = './'; // Redirection de secours vers l'accueil
+          }
+        } else {
+          const statusElement = document.getElementById('status');
+          const tokenInput = document.getElementById('serverToken');
+          statusElement.textContent = 'Token invalide, veuillez réessayer.';
+          statusElement.classList.remove('hidden');
+          tokenInput.classList.add('input-error');
+        }
+      } catch (error) {
+        console.error('Erreur lors de la vérification du token:', error);
+      }
+    });
+
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('serverToken');
+      const passwordIcon = document.querySelector('.toggle-password');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordIcon.textContent = '🙉';
+      } else {
+        passwordInput.type = 'password';
+        passwordIcon.textContent = '🙈';
+      }
+    }
+
+    const passwordIcon = document.querySelector('.toggle-password');
+    if (passwordIcon) {
+      passwordIcon.addEventListener('click', togglePasswordVisibility);
+    } else {
+      console.warn('Password toggle icon not found.');
+    }
+  });
+</script>
+  
+    <style>
+	
+    .section-content {
+	  margin: 1px auto 1px auto;
+      margin-bottom: 14px;
+	  margin-top: 24px;
+      padding: 40px;
+	  background: linear-gradient(200deg, var(--button-change-header), var(--button-change-header1));
+      border-radius: 35px;
+      transition: all 0.3s ease;
+	  text-align: justify;
+	  line-height: 2.2;
+	  text-align: left;
+	  font-family: var(--ff-poppins);
+	  font-size: 15px;
+    }
+	
+	code {
+      background-color: #3c4270;
+	  border-radius: 4px;
+	  padding: 2px 4px;
+	  font-family: Poppins;
+	  font-size: 0.9em;
+	  font-weight: 450;
+	  transition: all 0.3s ease;
+   	  color: #FFFFFF;
+	  white-space: nowrap;
+	}
+
+	code:hover {
+	  background-color: #5865f2;
+	}
+	
+	.nav-container {
+	  position: relative;
+	  display: inline-block;
+	}
+
+	.dropdown-menu {
+	  display: none;
+	  position: absolute;
+	  top: 65px;
+	  right: 0;
+	  transform: translateX(-50%);
+	  background-color: #191a20;
+	  z-index: 1000;
+	  list-style: none;
+	  padding: 5px;
+	  margin: 0;
+	  width: 220px;
+	  border-radius: 20px;
+	  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.4));
+	  opacity: 0;
+	  transform: translateY(-10px);
+	  transition: opacity 0.15s cubic-bezier(.4, 0, .2, 1), transform 0.15s cubic-bezier(.4, 0, .2, 1);
+	}
+
+	.dropdown-menu a {
+	  display: block;
+	  margin: 10px;
+	  transition: 0.3s;
+    }
+
+	.dropdown-menu a:hover {
+
+	}
+
+	.dropdown-menu.show {
+	  display: block;
+	  opacity: 1;
+	  transform: translateY(0);
+	}
+
+	.dropdown-menu.hide {
+	  opacity: 0;
+	  transform: translateY(-10px);
+	}
+	
+	.scroll-link {
+	  color: var(--ultramarine-blue);
+	  text-decoration: none;
+	  cursor: pointer;
+	    display: inline-block; /* Assure que le lien prend seulement l'espace nécessaire pour le texte */
+	}
+
+	.scroll-link:hover {
+	  text-decoration: underline;
+	}
+
+	
+  </style>
+  
+        <section class="section-hero" aria-label="instruction" id="scroll-connexion">
+        <div class="container-description" id="feature">
+
+    <h2 class="h2 section-title text-center">Comment récupérer ton Identifiant Ouistitis?</h2>
+		
+      <div class="section-content">
+		
+   		  <li>1. Ne partage ton identifiant qu'avec des membres de confiance.</li>
+          <li>2. Ouvre ton application Discord et accède au serveur que tu souhaites configurer.</li>
+          <li>3. Utilise la commande <code>/dashboard</code> dans n'importe quel salon visible par Ouistitis.</li>
+          <li>4. Choisis d'afficher ton identifiant actuel ou génère-en un si tu n'en as pas encore.</li>
+		  <li>5. Ouistitis te répondra avec l'identifiant unique de ton serveur en message éphémère.</li>
+          <li>6. Copie l'identifiant et colle-le dans le champ ci-dessus pour te connecter.</li>
+	   
+      </div>
+        
+		<li>Uniquement le propriétaire du serveur peut utiliser la commande <code>/dashboard</code>.</li>
+	   </ol>
+			
+          </div>
+		</section>
+
+  <!-- 
+    - #FOOTER
+  -->
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-left">
+        <a class="logo-footer">
+          <img src="Ouistitis.png" width="50" height="50" alt="Logo">
+        </a>
+        <p class="copyright">
+          &copy; 2024 Ouistitis. Tous droits réservés.
+        </p>
+      </div>
+      <ul class="footer-bottom-list">
+        <li>
+          <a href="https://discord.com/users/1238123562254995457" class="footer-bottom-link">Contacter le support</a>
+        </li>
+        <li>
+          <a href="./privacy" class="footer-bottom-link">Politique de confidentialité</a>
+        </li>
+        <li>
+          <a href="./terms" class="footer-bottom-link">Conditions d'utilisation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <!-- 
+    - ionicon-link
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/components/icon.min.css">
+
+  <script src="assets/js/mobile-adapter.js" defer></script>
+  <script src="assets/js/logout.js" defer></script>
+  <script src="assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

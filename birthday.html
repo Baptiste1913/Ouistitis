@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ouistitis.online/" />
+<meta property="og:title" content="Ouistitis" />
+<meta property="og:description" content="Ouistitis accélère la croissance de votre communauté grâce à ses différentes fonctionnalités comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, le système de niveaux, et plus encore !" />
+<meta property="og:image" content="https://ouistitis.online/Illustration.svg" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://ouistitis.online/" />
+<meta property="twitter:title" content="Ouistitis" />
+<meta property="twitter:description" content="Ouistitis accélère la croissance de votre communauté grâce à ses différentes fonctionnalités comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, le système de niveaux, et plus encore !" />
+<meta property="twitter:image" content="https://ouistitis.online/Illustration.svg" />
+
+  <!-- 
+    - primary meta tags
+  -->
+  
+  <title>Ouistitis - Anniversaires</title>
+  <meta name="title" content="Ouistitis — Bot Discord Multifonctions">
+  <meta name="description" content="Ouistitis accélère la croissance de votre communauté grâce à ses différentes fonctionnalités comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, le système de niveaux, et plus encore !">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="icon" href="favicon.ico">
+
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- PRELOADER -->
+
+<div id="preloader">
+	<div class="spinner">
+		<div class="double-bounce1"></div>
+		<div class="double-bounce2"></div>
+	</div>
+</div>
+ 
+<script>
+    var loader = document.getElementById("preloader");
+    var minDisplayTime = 1000;
+    var startTime = Date.now();
+
+    document.body.style.overflow = 'hidden';
+
+    window.addEventListener("load", function () {
+        var elapsedTime = Date.now() - startTime;
+        var remainingTime = minDisplayTime - elapsedTime;
+
+        if (remainingTime > 0) {
+            setTimeout(function() {
+                loader.style.display = "none";
+                document.body.style.overflow = '';
+            }, remainingTime);
+        } else {
+            loader.style.display = "none";
+            document.body.style.overflow = '';
+        }
+    });
+</script>
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+    <a href="./" class="logo">
+      <img src="Ouistitis.png" width="50" height="50" alt="Logo">
+      <h1 class="logo-text" style="color:#FFFFFF;"><b>OUISTITIS</b></h1>
+    </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+		
+
+          <a href="#" class="logo"><h1><b>Ouistitis</b></h1>
+        
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+        </div>
+
+        <ul class="navbar-list">
+
+          <li>
+            <a href="./" class="navbar-link">Accueil</a>
+          </li>
+
+          <li>
+            <a href="./login" class="navbar-link">Dashboard</a>
+          </li>
+		  
+        </ul>
+
+      </nav>
+
+      <div class="btn-group">
+	  
+      <!-- Menu pour les utilisateurs non connectés -->
+      <div class="nav-container" id="navContainerNotLoggedIn">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler-dash>
+		  <i class="user circle icon"></i>
+		  	<i class="chevron down icon"></i>
+        </button>
+        <ul class="dropdown-menu hidden" id="dropdownMenuDash">
+          <div class="logo-dropdown">
+            <a href="./login" class="btn btn-primary-blue" onclick="redirectToLogin()">Connexion</a>
+          </div>
+          <li><h3 class="btn-link-title">NAVIGATION</h3></li>
+          <li><a href="./" class="btn-link-desc">Accueil</a></li>
+		  <li><a href="./commands" class="btn-link-desc">Commandes</a></li>
+          <li><a href="./dashboard" class="btn-link-desc">Tableau de bord</a></li>
+		  
+        </ul>
+      </div>
+
+      <!-- Menu pour les utilisateurs connectés -->
+      <div class="nav-container" id="navContainerLoggedIn">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler-logged>
+          <img id="serverIcon" class="serverIcon hidden" alt="." width="50" height="50">
+		  	<i class="chevron down icon"></i>
+        </button>
+        <ul class="dropdown-menu hidden" id="dropdownMenuLogged">
+            <li><h3 class="btn-link-server" id="serverName"></h3></li>
+			<div class="logo-dropdown">
+
+            <button id="logoutBtn" class="btn btn-primary-blue">Déconnexion</button>
+          </div>
+          <li><h3 class="btn-link-title">NAVIGATION</h3></li>
+          <li><a href="./" class="btn-link-desc">Accueil</a></li>
+		  <li><a href="./commands" class="btn-link-desc">Commandes</a></li>
+          <li><a href="./dashboard" class="btn-link-desc">Tableau de bord</a></li>
+		  
+          <li><h3 class="btn-link-title">TABLEAU DE BORD</h3></li>
+          <li><a href="./features" class="btn-link-desc">Fonctionnalités</a></li>
+          <li><a href="./levels" class="btn-link-desc">Niveaux</a></li>
+          <li><a href="./welcome" class="btn-link-desc">Bienvenue</a></li>
+          <li><a href="./birthdays" class="btn-link-desc">Anniversaires</a></li>
+        </ul>
+      </div>
+
+      <div class="overlay" data-overlay data-nav-toggler></div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <style>
+
+    .section-text-description {
+      cursor: pointer;
+      margin: 10px 0;
+      padding: 10px;
+      background: #1f2129;
+      border-radius: 10px;
+      transition: background 0.3s;
+	  user-select: none; 
+    }
+
+    .section-text-description:hover {
+      background: #191a20;
+    }
+
+    .section-content {
+      display: none;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: #1f2129;
+      border-left: 3px solid #8891f2;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+	  text-align: justify;
+    }
+
+    .text-center-description {
+      text-align: center;
+    }
+
+    .show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+	
+	code {
+      background-color: #3c4270;
+	  border-radius: 4px;
+	  padding: 2px 4px;
+	  font-family: Poppins;
+	  font-size: 0.9em;
+	  font-weight: 450;
+	  transition: all 0.3s ease;
+   	  color: #FFFFFF;
+	  white-space: nowrap;
+	}
+
+	code:hover {
+	  background-color: #5865f2;
+	}
+	
+	.nav-container {
+	  position: relative;
+	  display: inline-block;
+	}
+
+	.dropdown-menu {
+	  display: none;
+	  position: absolute;
+	  top: 65px;
+	  right: 0;
+	  transform: translateX(-50%);
+	  background-color: #191a20;
+	  z-index: 1000;
+	  list-style: none;
+	  padding: 5px;
+	  margin: 0;
+	  width: 220px;
+	  border-radius: 20px;
+	  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.4));
+	  opacity: 0;
+	  transform: translateY(-10px);
+	  transition: opacity 0.15s cubic-bezier(.4, 0, .2, 1), transform 0.15s cubic-bezier(.4, 0, .2, 1);
+	}
+	
+	#logoutBtn {
+	  display: block;
+	  margin-left: 10px;
+	  margin-right: 10px;
+	  margin-bottom: 10px;
+	  transition: 0.3s;
+    }
+
+	.dropdown-menu a {
+	  display: block;
+	  margin: 10px;
+	  transition: 0.3s;
+    }
+
+	.dropdown-menu a:hover {
+
+	}
+
+	.dropdown-menu.show {
+	  display: block;
+	  opacity: 1;
+	  transform: translateY(0);
+	}
+
+	.dropdown-menu.hide {
+	  opacity: 0;
+	  transform: translateY(-10px);
+	}
+	
+	.hidden {
+	  display: none !important;
+	  visibility: hidden !important;
+	}
+
+  </style>
+
+      <!-- 
+        - #INSTRUCTION
+      -->
+
+      <section class="section-instruction" aria-label="instruction">
+        <div class="container" id="feature">
+
+          <h2 class="h1 section-title text-center">Anniversaires</h2>
+
+<div id="serverInfo" class="server-infos">
+  <div class="server-visual">	
+    <div id="server-avatar"></div>
+    <h3 class="h2 server-title text-center"><span id="server-name"></span></h3>
+  </div>
+</div>
+
+<br>
+
+<ul id="birthdaysList"></ul>
+<div id="loading" class="spinner">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+</div>
+
+          <p class="server-text text-center">
+Il est possible que le cache Discord puisse prendre un certain temps avant d'inclure les membres récemment ajoutés ou modifiés.
+          </p>
+
+<div class="error-leader">
+<div id="error" style="display:none;"></div>
+</div>
+
+
+</div>
+
+		<script>
+			function openInNewWindow(event) {
+			event.preventDefault();
+			window.open('https://discord.com/oauth2/authorize?client_id=1240398531257176144&permissions=8&integration_type=0&scope=bot+applications.commands', '_blank', 'width=500,height=800');
+			}
+		</script>
+
+        </div>
+      </section>
+		
+            <div class="btn-group2">
+
+              </a>
+            </div>
+
+          </div>
+
+  <script>
+    function displayServerName() {
+      const serverName = localStorage.getItem('serverName');
+      const serverNameElement = document.getElementById('serverName');
+
+      if (serverName && serverNameElement) {
+        serverNameElement.textContent = serverName;
+      }
+    }
+
+    async function loadConfigSelect() {
+      const token = localStorage.getItem('serverToken');
+      const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+      console.log('Token au chargement:', token);
+      console.log('isAuthenticated au chargement:', isAuthenticated);
+
+      if (token && isAuthenticated === 'true') {
+        try {
+          const response = await fetch('https://api.ouistitis.online/verifyToken', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token })
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            console.log('Résultat JSON après vérification du token:', result);
+            if (result.valid) {
+              const serverIcon = document.getElementById('serverIcon');
+              serverIcon.src = result.serverIcon;
+              console.log('URL de l\'icône du serveur:', serverIcon.src);
+              displayMenuBasedOnAuth(true);
+            } else {
+              console.log('Token invalide, effacement des informations');
+              localStorage.removeItem('serverToken');
+              localStorage.removeItem('isAuthenticated');
+              displayMenuBasedOnAuth(false);
+            }
+          } else {
+            console.log('Erreur avec le serveur');
+            document.getElementById('status').textContent = 'Erreur avec le serveur';
+            displayMenuBasedOnAuth(false);
+          }
+        } catch (error) {
+          console.error('Erreur lors de la vérification du token:', error);
+          document.getElementById('status').textContent = 'Erreur lors de la vérification du token';
+          displayMenuBasedOnAuth(false);
+        }
+      } else {
+        console.log('Utilisateur non authentifié');
+        displayMenuBasedOnAuth(false);
+      }
+    }
+
+    function displayMenuBasedOnAuth(isAuthenticated) {
+      const navContainerNotLoggedIn = document.getElementById('navContainerNotLoggedIn');
+      const navContainerLoggedIn = document.getElementById('navContainerLoggedIn');
+
+      if (isAuthenticated) {
+        navContainerNotLoggedIn.style.display = 'none';
+        navContainerLoggedIn.style.display = 'block';
+      } else {
+        navContainerNotLoggedIn.style.display = 'block';
+        navContainerLoggedIn.style.display = 'none';
+      }
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      console.log('Bouton Déconnexion cliqué');
+      localStorage.removeItem('serverToken');
+      localStorage.removeItem('isAuthenticated');
+      localStorage.removeItem('serverName');
+      localStorage.removeItem('dropdownServerName');
+      console.log('Redirection vers privacy');
+      window.location.href = './privacy';
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      displayServerName();
+      loadConfigSelect();
+
+      // Gestion de l'affichage des menus déroulants
+      const navTogglerNotLoggedIn = document.querySelector('#navContainerNotLoggedIn .nav-open-btn');
+      const navTogglerLoggedIn = document.querySelector('#navContainerLoggedIn .nav-open-btn');
+
+      if (navTogglerNotLoggedIn) {
+        console.log('Attach event listener for not logged in menu');
+        navTogglerNotLoggedIn.addEventListener('click', () => {
+          console.log('Not logged in menu button clicked');
+          const parent = navTogglerNotLoggedIn.parentElement;
+          parent.classList.toggle('open');
+        });
+      }
+
+      if (navTogglerLoggedIn) {
+        console.log('Attach event listener for logged in menu');
+        navTogglerLoggedIn.addEventListener('click', () => {
+          console.log('Logged in menu button clicked');
+          const parent = navTogglerLoggedIn.parentElement;
+          parent.classList.toggle('open');
+        });
+      }
+    });
+
+async function fetchBirthdays() {
+    const loading = document.getElementById('loading');
+    const birthdaysList = document.getElementById('birthdaysList');
+    const error = document.getElementById('error');
+    const serverAvatar = document.getElementById('server-avatar'); // Conteneur pour l'avatar du serveur
+    const serverName = document.getElementById('server-name'); // Conteneur pour le nom du serveur
+
+    if (!birthdaysList) {
+        console.error('Element with ID "birthdaysList" not found.');
+        return;
+    }
+
+    // Extraire les paramètres de l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const guildId = urlParams.get('SID');
+
+    if (!guildId) {
+        error.textContent = 'No server ID provided in the URL.';
+        loading.style.display = 'none';
+        error.style.display = 'block';
+        return;
+    }
+
+    try {
+        const apiUrl = 'https://api.ouistitis.online/birthday';
+        const requestData = { SID: guildId };
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch birthdays: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        // Vérifier ce que contient 'data'
+        console.log('Data received from API:', data);
+
+        const birthdays = data.birthdays || [];
+        const serverInfo = {
+            name: data.serverInfo?.name || 'Nom du serveur non disponible',
+            avatarUrl: data.serverInfo?.avatarUrl || 'https://cdn.discordapp.com/embed/avatars/1.png'
+        };
+
+        // Masquer le loader et afficher les éléments
+        loading.style.display = 'none';
+        birthdaysList.style.display = 'block';
+        birthdaysList.innerHTML = '';
+
+        // Affichage des informations du serveur
+        if (serverAvatar && serverName) {
+            serverAvatar.innerHTML = `
+                <img src="${serverInfo.avatarUrl}" alt="Avatar du serveur" width="50" height="50" style="border-radius: 50%;">
+            `;
+            serverName.textContent = serverInfo.name;
+        }
+
+        // Affichage des anniversaires
+        birthdays.forEach((user, index) => {
+			const truncatedUsername = truncateUsername(user.username, 12); // Limite à 10 caractères
+            const listItem = document.createElement('li');
+            listItem.className = 'card-birthday';
+			
+			// Vérifier si le délai restant avant l'anniversaire est d'un jour
+			if (user.remainingTime === '1 jour' || user.remainingTime === '1 jours') {
+				listItem.classList.add('first-place'); // Ajoute une classe spécifique si l'anniversaire est demain
+			}
+
+            listItem.innerHTML = `
+                <div class="card-left">
+                    <div class="card-rank">${index + 1}</div>
+                    <img src="${user.avatarUrl}" alt="Avatar de ${user.username}" width="30" height="30">
+                    <div class="card-username-container">
+                        <div class="user-name">${truncatedUsername}</div>
+                        <div class="user-remaining-time">${user.remainingTime}</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <div class="date-label">Date</div>
+                    <div class="user-birthday">${user.birthday}</div>
+                </div>
+            `;
+
+            birthdaysList.appendChild(listItem);
+        });
+
+    } catch (e) {
+        console.error('Error fetching leaderboard:', e);
+        loading.style.display = 'none';
+        error.style.display = 'block';
+        error.innerHTML = `
+            <div style="text-align: center; max-width: 600px; margin: auto;">
+                <h2>Oops !</h2>
+                <ul style="text-align: justify;">
+                    <li>L'identifiant du serveur est incorrect ou aucun membre n'a encore enregistré son anniversaire.</li>
+                </ul>
+            </div>
+        `;
+        hideServerInfo(); // Masquer les éléments si une erreur se produit
+    }
+}
+
+function hideServerInfo() {
+    const serverVisualElements = document.querySelectorAll('.server-visual');
+    const serverTextElements = document.querySelectorAll('.server-text');
+    
+    serverVisualElements.forEach(element => {
+        element.style.display = 'none';
+    });
+    
+    serverTextElements.forEach(element => {
+        element.style.display = 'none';
+    });
+}
+
+function truncateUsername(username, maxLength) {
+    if (username.length > maxLength) {
+        const truncated = username.slice(0, maxLength) + '...';
+        return truncated;
+    } else {
+        return username;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", fetchBirthdays);
+
+</script>
+
+</script>
+  
+<style>
+
+.card-birthday {
+    background: linear-gradient(200deg, var(--button-change-header), var(--button-change-header1));
+    margin-bottom: 10px;
+    border-radius: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.server-visual {
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  border-radius: 30px;
+}
+
+.server-title {
+	margin-top: 10px;
+}
+
+.server-infos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#server-avatar {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.server-text {
+	font-size: 10px;
+	font-family: var(--ff-poppins);
+	margin-top: 10px;
+}
+
+.card-left {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.card-username-container {
+    display: flex;
+    flex-direction: column; /* Empile les éléments verticalement */
+    margin-left: 10px;
+}
+
+.user-name {
+font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: auto;
+  flex-shrink: 0;
+font-family: var(--ff-poppins);
+}
+
+.user-remaining-time {
+    color: #3d434d;
+    font-weight: normal;
+    font-size: 1.2rem;
+	font-family: var(--ff-poppins);
+}
+
+.card-right {
+    display: flex;
+    flex-direction: column; /* Empile le label et la date */
+    align-items: center;
+}
+
+.date-label {
+display: block;
+  font-size: 0.9rem;
+  color: #3d434d;
+  font-weight: bold;
+  font-family: var(--ff-poppins);
+}
+
+.user-birthday {
+font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: auto;
+  flex-shrink: 0;
+  font-family: var(--ff-poppins);
+}
+
+.card-rank {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-right: 15px;
+    border: 1px solid #303240;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	font-family: var(--ff-poppins);
+}
+
+img {
+    border-radius: 100%;
+}
+
+.card-content {
+    align-items: center; /* Aligne les éléments sur la même ligne */
+    margin-left: 15px; /* Ajoute de l'espace entre l'avatar et le texte */
+}
+
+.card-date {
+    align-items: center;
+    margin-left: 15px;
+	justify-content: center;
+}
+
+.card-username {
+	display: flex;
+    font-size: 1.4rem;
+    margin-right: 10px;
+	align-items: center;
+}
+
+.card-birthday-date {
+    font-size: 1.2rem;
+    color: #3d434d;
+}
+
+
+
+.card-info {
+  display: flex;
+    font-size: 1.2rem;
+    color: #3d434d;
+    margin-top: 5px;
+}
+
+.card-info div {
+    margin-bottom: 5px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-wrap: nowrap;
+}
+
+.card-date, .card-age, .card-remaining-time {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.card-age {
+    margin-right: 20px;
+}
+
+.card-remaining-time {
+    margin-left: 0;
+}
+
+.user-date span, .card-age span, .card-remaining-time span {
+    display: block;
+    font-size: 0.9rem;
+    color: #3d434d;
+}
+
+.card-birthday.first-place {
+    position: relative;
+    border-radius: 25px;
+    margin-bottom: 12px;
+}
+
+.card-birthday.first-place::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 27px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background: linear-gradient(200deg, 
+        #f5f5f5, /* Blanc cassé */
+		#f5f5f5, /* Blanc cassé */
+        #b0b0b0, /* Blanc foncé */
+        #f5f5f5, /* Blanc cassé */
+        #6fd7e5, /* Bleu pastel très pâle */
+        #f5f5f5, /* Blanc cassé */
+        #b0b0b0, /* Blanc foncé */
+        #f8f9fa, /* Blanc très pâle */
+        #b0b0b0, /* Blanc foncé */
+        #f5f5f5, /* Blanc cassé */
+        #f883ab, /* Rose pastel très pâle */
+        #f5f5f5, /* Blanc cassé */
+        #b0b0b0, /* Blanc foncé */
+        #f5f5f5, /* Blanc cassé */
+        #b0b0b0, /* Blanc foncé */
+        #f5f5f5, /* Blanc cassé */
+        #ffc870, /* Orange pastel très pâle */
+        #f5f5f5, /* Blanc cassé */
+        #b0b0b0, /* Blanc foncé */
+        #e0e0e0, /* Gris très pâle */
+        #b0b0b0, /* Blanc foncé */
+        #f5f5f5, /* Blanc cassé */
+        #72da7a,  /* Vert pastel très pâle */
+        #f5f5f5, /* Blanc cassé */
+        #b0b0b0, /* Blanc foncé */
+        #f5f5f5, /* Blanc cassé */
+        #f5f5f5 /* Blanc cassé */
+    );
+    z-index: -1;
+}
+
+.card-birthday .content {
+    position: relative;
+    z-index: 1; /* Assure que le contenu de la carte soit au-dessus de la bordure dégradée */
+}
+
+#server-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#error {
+    background: linear-gradient(200deg, var(--button-change-header), var(--button-change-header1));
+    padding: 40px;
+    border-radius: 35px;
+    align-items: center;
+}
+
+#error h2 {
+    margin-bottom: 20px;
+    color: #FFF;
+}
+
+#error p, #error ul {
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+#error ul {
+    padding-left: 20px;
+}
+
+#error li {
+    margin-bottom: 8px;
+}
+
+.error-leader {
+    display: flex;
+    justify-content: center;
+}
+
+</style>
+
+  <!-- 
+    - #FOOTER
+  -->
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-left">
+        <a class="logo-footer">
+          <img src="Ouistitis.png" width="50" height="50" alt="Logo">
+        </a>
+        <p class="copyright">
+          &copy; 2024 Ouistitis. Tous droits réservés.
+        </p>
+      </div>
+      <ul class="footer-bottom-list">
+        <li>
+          <a href="https://discord.com/users/1238123562254995457" class="footer-bottom-link">Contacter le support</a>
+        </li>
+        <li>
+          <a href="./privacy" class="footer-bottom-link">Politique de confidentialité</a>
+        </li>
+        <li>
+          <a href="./terms" class="footer-bottom-link">Conditions d'utilisation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- 
+    - ionicon-link
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/components/icon.min.css">
+
+  <script src="assets/js/mobile-adapter.js" defer></script>
+  <script src="assets/js/logout.js" defer></script>
+  <script src="assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

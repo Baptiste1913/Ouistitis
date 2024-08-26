@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ouistitis.online/" />
+<meta property="og:title" content="Ouistitis" />
+<meta property="og:description" content="Ouistitis accélère la croissance de votre communauté grâce à ses différentes fonctionnalités comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, le système de niveaux, et plus encore !" />
+<meta property="og:image" content="https://ouistitis.online/Illustration.svg" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://ouistitis.online/" />
+<meta property="twitter:title" content="Ouistitis" />
+<meta property="twitter:description" content="Ouistitis accélère la croissance de votre communauté grâce à ses différentes fonctionnalités comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, le système de niveaux, et plus encore !" />
+<meta property="twitter:image" content="https://ouistitis.online/Illustration.svg" />
+
+  <!-- 
+    - primary meta tags
+  -->
+  
+  <title>Ouistitis - Tableau de bord</title>
+  <meta name="title" content="Ouistitis — Bot Discord Multifonctions">
+  <meta name="description" content="Ouistitis accélère la croissance de votre communauté grâce à ses différentes fonctionnalités comme l'intégration de l'IA, la gestion des anniversaires, l'accueil des nouveaux membres, le système de niveaux, et plus encore !">
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="icon" href="favicon.ico">
+
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+	
+<!-- PRELOADER -->
+
+<div id="preloader">
+	<div class="spinner">
+		<div class="double-bounce1"></div>
+		<div class="double-bounce2"></div>
+	</div>
+</div>
+ 
+<script>
+    var loader = document.getElementById("preloader");
+    var minDisplayTime = 1000;
+    var startTime = Date.now();
+
+    document.body.style.overflow = 'hidden';
+
+    window.addEventListener("load", function () {
+        var elapsedTime = Date.now() - startTime;
+        var remainingTime = minDisplayTime - elapsedTime;
+
+        if (remainingTime > 0) {
+            setTimeout(function() {
+                loader.style.display = "none";
+                document.body.style.overflow = '';
+            }, remainingTime);
+        } else {
+            loader.style.display = "none";
+            document.body.style.overflow = '';
+        }
+    });
+</script>
+	
+  <!-- 
+    - header
+  -->
+
+<body>
+  <header class="header" data-header>
+    <div class="container">
+
+    <a href="./" class="logo">
+      <img src="Ouistitis.png" width="50" height="50" alt="Logo">
+      <h1 class="logo-text" style="color:#FFFFFF;"><b>OUISTITIS</b></h1>
+    </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+		
+
+          <a href="#" class="logo"><h1><b>Ouistitis</b></h1>
+        
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler-dash>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+        </div>
+
+        <ul class="navbar-list">
+
+          <li>
+            <a href="./" class="navbar-link">Accueil</a>
+          </li>
+
+          <li>
+            <a href="./login" class="navbar-link">Dashboard</a>
+          </li>
+		  
+        </ul>
+
+      </nav>
+
+      <div class="btn-group">
+	  
+      <!-- Menu pour les utilisateurs non connectés -->
+      <div class="nav-container" id="navContainerNotLoggedIn">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler-dash>
+		  <i class="user circle icon"></i>
+		  	<i class="chevron down icon"></i>
+        </button>
+        <ul class="dropdown-menu hidden" id="dropdownMenuDash">
+          <div class="logo-dropdown">
+            <a href="./login" class="btn btn-primary-blue" onclick="redirectToLogin()">Connexion</a>
+          </div>
+          <li><h3 class="btn-link-title">NAVIGATION</h3></li>
+          <li><a href="./" class="btn-link-desc">Accueil</a></li>
+		  <li><a href="./commands" class="btn-link-desc">Commandes</a></li>
+          <li><a href="./dashboard" class="btn-link-desc">Tableau de bord</a></li>
+		  
+        </ul>
+      </div>
+
+      <!-- Menu pour les utilisateurs connectés -->
+      <div class="nav-container" id="navContainerLoggedIn">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler-logged>
+          <img id="serverIcon" class="serverIcon hidden" alt="." width="50" height="50">
+		  	<i class="chevron down icon"></i>
+        </button>
+        <ul class="dropdown-menu hidden" id="dropdownMenuLogged">
+            <li><h3 class="btn-link-server server-name"></h3></li>
+			<div class="logo-dropdown">
+
+            <button id="logoutBtn" class="btn btn-primary-blue">Déconnexion</button>
+          </div>
+          <li><h3 class="btn-link-title">NAVIGATION</h3></li>
+          <li><a href="./" class="btn-link-desc">Accueil</a></li>
+		  <li><a href="./commands" class="btn-link-desc">Commandes</a></li>
+          <li><a href="./dashboard" class="btn-link-desc">Tableau de bord</a></li>
+		  
+          <li><h3 class="btn-link-title">TABLEAU DE BORD</h3></li>
+          <li><a href="./features" class="btn-link-desc">Fonctionnalités</a></li>
+          <li><a href="./levels" class="btn-link-desc">Niveaux</a></li>
+          <li><a href="./welcome" class="btn-link-desc">Bienvenue</a></li>
+          <li><a href="./birthdays" class="btn-link-desc">Anniversaires</a></li>
+        </ul>
+      </div>
+
+      <div class="overlay" data-overlay data-nav-toggler-dash></div>
+
+      </div>
+
+    </div>
+  </header>
+  
+		<script>
+			function openInNewWindow(event) {
+			event.preventDefault();
+			window.open('https://discord.com/oauth2/authorize?client_id=1240398531257176144&permissions=8&integration_type=0&scope=bot+applications.commands', '_blank', 'width=500,height=800');
+			}
+		</script>
+  
+    <style>
+	
+    .section-content {
+      margin-bottom: 14px;
+	  margin-top: 24px;
+      padding: 20px;
+      background: #191a20;
+      border-left: 3px solid #8891f2;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+	  text-align: justify;
+	  line-height: 2.2;
+    }
+	
+	code {
+      background-color: #3c4270;
+	  border-radius: 4px;
+	  padding: 2px 4px;
+	  font-family: Poppins;
+	  font-size: 0.9em;
+	  font-weight: 450;
+	  transition: all 0.3s ease;
+   	  color: #FFFFFF;
+	  white-space: nowrap;
+	}
+
+	code:hover {
+	  background-color: #5865f2;
+	}
+	
+	.nav-container {
+	  position: relative;
+	  display: inline-block;
+	}
+
+	.dropdown-menu {
+	  display: none;
+	  position: absolute;
+	  top: 65px;
+	  right: 0;
+	  transform: translateX(-50%);
+	  background-color: #191a20;
+	  z-index: 1000;
+	  list-style: none;
+	  padding: 5px;
+	  margin: 0;
+	  width: 220px;
+	  border-radius: 20px;
+	  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.4));
+	  opacity: 0;
+	  transform: translateY(-10px);
+	  transition: opacity 0.15s cubic-bezier(.4, 0, .2, 1), transform 0.15s cubic-bezier(.4, 0, .2, 1);
+	}
+	
+	#logoutBtn {
+	  display: block;
+	  margin-left: 10px;
+	  margin-right: 10px;
+	  margin-bottom: 10px;
+	  transition: 0.3s;
+    }
+
+	.dropdown-menu a {
+	  display: block;
+	  margin: 10px;
+	  transition: 0.3s;
+    }
+
+	.dropdown-menu a:hover {
+
+	}
+
+	.dropdown-menu.show {
+	  display: block;
+	  opacity: 1;
+	  transform: translateY(0);
+	}
+
+	.dropdown-menu.hide {
+	  opacity: 0;
+	  transform: translateY(-10px);
+	}
+	
+  </style>
+  
+      <!-- 
+        - #INSTRUCTION
+      -->
+
+      <section class="section-instruction" aria-label="instruction">
+        <div class="container" id="feature">
+		  
+          <h2 class="h1 section-title text-center">Niveaux</h2>
+
+          <p class="section-text text-center">
+		Configure l'attribution des rôles ou réinitialise tous les niveaux.
+          </p>
+		  
+		  <br>
+		  <br>
+		  
+<h2 class="h2 section-title text-center">
+    <button id="backBtn" class="btn btn-primary-header">Retour</button>
+</h2>	
+
+<h2 class="h3 section-title text-center">
+    <div class="save-message" id="status" style="color: #ccc"></div>
+</h2>
+
+      <div class="level-config">
+        <h2>Attribution</h2>
+        <div class="level-selector">
+          <select id="roleSelect">
+            <!-- Options ajoutées dynamiquement -->
+          </select>
+          <select id="levelSelect">
+            <!-- Options ajoutées dynamiquement -->
+          </select>
+          <button id="addConfigBtn" class="btn btn-primary-blue">Ajouter</button>
+        </div>
+	</div>
+	
+        <div id="levelSettingsContainer">
+        </div>
+
+      <div class="level-reset">
+        <h2>Réinitialisation</h2>
+		    <p class="section-text">Supprime l'intégralité des niveaux et XP obtenus par les membres. Cette action est irréversible.</p>
+			<br>
+        <button id="resetBtn" class="btn btn-primary-levels">Réinitialiser</button>
+      </div>
+	  
+	  		<div class="btn-group3">
+            </a>
+        </div>
+		
+    </div>
+  </main>
+
+  <script>
+    let abortController;
+    let allRoles = [];
+	
+    function displayServerName() {
+      const serverName = localStorage.getItem('serverName');
+      const serverNameElements = document.querySelectorAll('.server-name');
+
+      serverNameElements.forEach(element => {
+        if (serverName) {
+          element.textContent = serverName;
+        } else {
+          element.textContent = 'Aucun serveur connecté.';
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', displayServerName);
+
+    async function loadLevelSystem() {
+      abortController = new AbortController();
+      const signal = abortController.signal;
+
+      const token = localStorage.getItem('serverToken');
+      const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+      console.log('Récupération du token:', token);
+      console.log('isAuthenticated:', isAuthenticated);
+
+      if (!token || isAuthenticated !== 'true') {
+        window.location.href = './login';
+        return;
+      }
+
+      try {
+        const response = await fetch('https://api.ouistitis.online/verifyToken', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token }),
+          signal
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Token vérifié, résultat:', result);
+          if (result.valid) {
+            const serverIcon = document.getElementById('serverIcon');
+            serverIcon.src = result.serverIcon;
+            allRoles = await loadRoles(token);
+            await loadLevelSettings(token);
+          } else {
+            localStorage.removeItem('serverToken');
+            localStorage.removeItem('isAuthenticated');
+            window.location.href = './login';
+          }
+        } else {
+          const text = await response.text();
+          console.error('Erreur de serveur:', text);
+          document.getElementById('status').textContent = 'Erreur avec le serveur';
+        }
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          document.getElementById('status').textContent = 'Erreur lors de la vérification du token';
+        }
+      }
+    }
+
+    async function loadLevelSettings(token) {
+      try {
+        const response = await fetch('https://api.ouistitis.online/getLevelSettings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token })
+        });
+
+        if (response.ok) {
+          const settings = await response.json();
+          console.log('Paramètres des niveaux récupérés:', settings);
+          displayLevelSettings(settings.levels);
+        } else {
+          const text = await response.text();
+          console.error('Erreur lors de la récupération des paramètres (response.ok=false):', text);
+          document.getElementById('status').textContent = 'Erreur lors de la récupération des paramètres';
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des paramètres (catch):', error);
+        document.getElementById('status').textContent =
+          'Erreur lors de la récupération des paramètres';
+      }
+    }
+
+    async function loadRoles(token) {
+      try {
+        const response = await fetch('https://api.ouistitis.online/getRoles', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token })
+        });
+
+        if (response.ok) {
+          const roles = await response.json();
+          console.log('Rôles récupérés:', roles);
+          displayRoleOptions(roles.filter(role => role.exists));
+          return roles;
+        } else {
+          const text = await response.text();
+          console.error('Erreur lors de la récupération des rôles (response.ok=false):', text);
+          document.getElementById('status').textContent = 'Erreur lors de la récupération des rôles';
+          return [];
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des rôles (catch):', error);
+        document.getElementById('status').textContent =
+          'Erreur lors de la récupération des rôles';
+        return [];
+      }
+    }
+	
+	let currentOpenLevel = null;
+
+function displayLevelSettings(levels) {
+  const container = document.getElementById('levelSettingsContainer');
+  container.innerHTML = '';
+
+  const levelRoleMap = {};
+
+  levels.forEach(([level, roles]) => {
+    if (!levelRoleMap[level]) {
+      levelRoleMap[level] = [];
+    }
+    roles.forEach(role => {
+      if (!levelRoleMap[level].includes(role)) {
+        levelRoleMap[level].push(role);
+      }
+    });
+  });
+
+  let hasRoles = false;
+  let firstItem = true;
+
+  for (const [level, roles] of Object.entries(levelRoleMap)) {
+    if (roles.length > 0) {
+      hasRoles = true;
+      const accordionItem = document.createElement('div');
+      accordionItem.classList.add('accordion-item');
+
+      if (currentOpenLevel === level || (firstItem && currentOpenLevel === null)) {
+        accordionItem.classList.add('active');
+        firstItem = false;
+      }
+
+      const header = document.createElement('div');
+      header.classList.add('accordion-header');
+      header.textContent = `Niveau ${level}`;
+      header.addEventListener('click', () => {
+        const currentlyActive = document.querySelector('.accordion-item.active');
+        if (currentlyActive && currentlyActive !== accordionItem) {
+          currentlyActive.classList.remove('active');
+        }
+        if (accordionItem.classList.contains('active')) {
+          currentOpenLevel = null;
+        } else {
+          currentOpenLevel = level;
+        }
+        accordionItem.classList.toggle('active');
+      });
+
+      const content = document.createElement('div');
+      content.classList.add('accordion-content');
+
+      const rolesList = document.createElement('ul');
+      roles.forEach(role => {
+        const roleExists = allRoles.find(r => r.id === role);
+        const roleItem = document.createElement('li');
+        roleItem.classList.add('role-item');
+        
+        const roleName = roleExists ? roleExists.name : 'Rôle supprimé';
+        roleItem.textContent = roleName;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '×';
+        deleteButton.classList.add('btn-remove');
+        deleteButton.addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteSingleRoleFromLevel(level, role);
+        });
+
+        roleItem.appendChild(deleteButton);
+        rolesList.appendChild(roleItem);
+      });
+      content.appendChild(rolesList);
+      accordionItem.appendChild(header);
+      accordionItem.appendChild(content);
+      container.appendChild(accordionItem);
+    }
+  }
+}
+
+    function displayRoleOptions(roles) {
+      const roleSelect = document.getElementById('roleSelect');
+      roleSelect.innerHTML = '';
+
+      roles.forEach(role => {
+        const option = document.createElement('option');
+        option.value = role.id;
+        option.textContent = role.name;
+        roleSelect.appendChild(option);
+      });
+
+      const levelSelect = document.getElementById('levelSelect');
+      levelSelect.innerHTML = '';
+      for (let i = 1; i <= 50; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = `Niveau ${i}`;
+        levelSelect.appendChild(option);
+      }
+    }
+
+async function addLevelConfig() {
+  const token = localStorage.getItem('serverToken');
+  const levelSelect = document.getElementById('levelSelect');
+  const roleSelect = document.getElementById('roleSelect');
+  const level = levelSelect.value;
+  const role = roleSelect.value;
+
+  try {
+    const response = await fetch('https://api.ouistitis.online/getLevelSettings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    const settings = await response.json();
+
+    const levelConfig = settings.levels.find(([lvl, roles]) => lvl == level);
+    if (levelConfig && levelConfig[[1]].includes(role)) {
+      document.getElementById('status').textContent = 'Ce rôle est déjà attribué à ce niveau';
+      return;
+    }
+
+    const addResponse = await fetch('https://api.ouistitis.online/addLevelConfig', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, level, role })
+    });
+
+    if (addResponse.ok) {
+      await loadLevelSettings(token);
+	  currentOpenLevel = level;
+    } else {
+      const text = await addResponse.text();
+      console.error('Erreur lors de l\'ajout de la configuration (response.ok=false):', text);
+      document.getElementById('status').textContent = 'Erreur lors de l\'ajout de la configuration';
+    }
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout de la configuration (catch):', error);
+    document.getElementById('status').textContent =
+      'Erreur lors de l\'ajout de la configuration';
+  }
+}
+
+async function deleteSingleRoleFromLevel(level, role) {
+  const token = localStorage.getItem('serverToken');
+  console.log('Suppression d\'un rôle du niveau:', { level, role });
+
+  try {
+    const response = await fetch('https://api.ouistitis.online/deleteSingleRoleFromLevel', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, level, role })
+    });
+
+    if (response.ok) {
+      await loadLevelSettings(token);
+      currentOpenLevel = level;
+    } else {
+      const text = await response.text();
+      console.error('Erreur lors de la suppression du rôle (response.ok=false):', text);
+      document.getElementById('status').textContent = 'Erreur lors de la suppression du rôle';
+    }
+  } catch (error) {
+    console.error('Erreur lors de la suppression du rôle (catch):', error);
+    document.getElementById('status').textContent =
+      'Erreur lors de la suppression du rôle';
+  }
+}
+
+    async function resetLevels() {
+      const token = localStorage.getItem('serverToken');
+      if (!confirm('Cette action est irréversible.')) {
+        return;
+      }
+
+      console.log('Réinitialisation des niveaux');
+
+      try {
+        const response = await fetch('https://api.ouistitis.online/resetLevels', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token })
+        });
+
+        if (response.ok) {
+          document.getElementById('status').textContent = 'Tous les niveaux ont été réinitialisés';
+        } else {
+          const text = await response.text();
+          console.error('Erreur lors de la réinitialisation (response.ok=false):', text);
+          document.getElementById('status').textContent = 'Erreur lors de la réinitialisation';
+        }
+      } catch (error) {
+        console.error('Erreur lors de la réinitialisation (catch):', error);
+        document.getElementById('status').textContent =
+          'Erreur lors de la réinitialisation';
+      }
+    }
+
+    document.getElementById('addConfigBtn').addEventListener('click', addLevelConfig);
+    document.getElementById('resetBtn').addEventListener('click', resetLevels);
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('serverToken');
+      localStorage.removeItem('isAuthenticated');
+      abortController.abort();
+      window.location.href = './';
+    });
+    document.getElementById('backBtn').addEventListener('click', () => {
+      abortController.abort();
+      window.location.href = './dashboard';
+    });
+
+    document.addEventListener('DOMContentLoaded', loadLevelSystem);
+  </script>
+</body>
+
+  <!-- 
+    - #FOOTER
+  -->
+
+<footer class="footer">
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-left">
+        <a class="logo-footer">
+          <img src="Ouistitis.png" width="50" height="50" alt="Logo">
+        </a>
+        <p class="copyright">
+          &copy; 2024 Ouistitis. Tous droits réservés.
+        </p>
+      </div>
+      <ul class="footer-bottom-list">
+        <li>
+          <a href="https://discord.com/users/1238123562254995457" class="footer-bottom-link">Contacter le support</a>
+        </li>
+        <li>
+          <a href="./privacy" class="footer-bottom-link">Politique de confidentialité</a>
+        </li>
+        <li>
+          <a href="./terms" class="footer-bottom-link">Conditions d'utilisation</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <!-- 
+    - ionicon-link
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/components/icon.min.css">
+
+  <script src="assets/js/mobile-adapter.js" defer></script>
+  <script src="assets/js/logout.js" defer></script>
+  <script src="assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
