@@ -426,7 +426,6 @@ Il est possible que le cache Discord puisse prendre un certain temps avant d'inc
       displayServerName();
       loadConfigSelect();
 
-      // Gestion de l'affichage des menus déroulants
       const navTogglerNotLoggedIn = document.querySelector('#navContainerNotLoggedIn .nav-open-btn');
       const navTogglerLoggedIn = document.querySelector('#navContainerLoggedIn .nav-open-btn');
 
@@ -453,15 +452,14 @@ async function fetchBirthdays() {
     const loading = document.getElementById('loading');
     const birthdaysList = document.getElementById('birthdaysList');
     const error = document.getElementById('error');
-    const serverAvatar = document.getElementById('server-avatar'); // Conteneur pour l'avatar du serveur
-    const serverName = document.getElementById('server-name'); // Conteneur pour le nom du serveur
+    const serverAvatar = document.getElementById('server-avatar');
+    const serverName = document.getElementById('server-name');
 
     if (!birthdaysList) {
         console.error('Element with ID "birthdaysList" not found.');
         return;
     }
 
-    // Extraire les paramètres de l'URL
     const urlParams = new URLSearchParams(window.location.search);
     const guildId = urlParams.get('SID');
 
@@ -490,7 +488,6 @@ async function fetchBirthdays() {
 
         const data = await response.json();
 
-        // Vérifier ce que contient 'data'
         console.log('Data received from API:', data);
 
         const birthdays = data.birthdays || [];
@@ -499,12 +496,10 @@ async function fetchBirthdays() {
             avatarUrl: data.serverInfo?.avatarUrl || 'https://cdn.discordapp.com/embed/avatars/1.png'
         };
 
-        // Masquer le loader et afficher les éléments
         loading.style.display = 'none';
         birthdaysList.style.display = 'block';
         birthdaysList.innerHTML = '';
 
-        // Affichage des informations du serveur
         if (serverAvatar && serverName) {
             serverAvatar.innerHTML = `
                 <img src="${serverInfo.avatarUrl}" alt="Avatar du serveur" width="50" height="50" style="border-radius: 50%;">
@@ -512,15 +507,13 @@ async function fetchBirthdays() {
             serverName.textContent = serverInfo.name;
         }
 
-        // Affichage des anniversaires
         birthdays.forEach((user, index) => {
-			const truncatedUsername = truncateUsername(user.username, 12); // Limite à 10 caractères
+			const truncatedUsername = truncateUsername(user.username, 12);
             const listItem = document.createElement('li');
             listItem.className = 'card-birthday';
 			
-			// Vérifier si le délai restant avant l'anniversaire est d'un jour
 			if (user.remainingTime === '1 jour' || user.remainingTime === '1 jours') {
-				listItem.classList.add('first-place'); // Ajoute une classe spécifique si l'anniversaire est demain
+				listItem.classList.add('first-place');
 			}
 
             listItem.innerHTML = `
@@ -553,7 +546,7 @@ async function fetchBirthdays() {
                 </ul>
             </div>
         `;
-        hideServerInfo(); // Masquer les éléments si une erreur se produit
+        hideServerInfo();
     }
 }
 
@@ -582,207 +575,203 @@ function truncateUsername(username, maxLength) {
 document.addEventListener("DOMContentLoaded", fetchBirthdays);
 
 </script>
-
-</script>
   
 <style>
 
-.card-birthday {
-    background: linear-gradient(200deg, var(--button-change-header), var(--button-change-header1));
-    margin-bottom: 10px;
-    border-radius: 25px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 30px;
-    padding-right: 30px;
-    display: flex;
-    align-items: center;
-}
+	.card-birthday {
+	  background: linear-gradient(200deg, var(--button-change-header), var(--button-change-header1));
+      margin-bottom: 10px;
+      border-radius: 25px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-left: 30px;
+      padding-right: 30px;
+      display: flex;
+      align-items: center;
+	}
+	
+	.server-visual {
+	  justify-content: center;
+	  align-items: center;
+	  padding: 30px;
+	  border-radius: 30px;
+	}
 
-.server-visual {
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
-  border-radius: 30px;
-}
+	.server-title {
+	  margin-top: 10px;
+	}
 
-.server-title {
-	margin-top: 10px;
-}
+	.server-infos {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	}
 
-.server-infos {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+	#server-avatar {
+	  align-items: center;
+	  display: flex;
+	  justify-content: center;
+	}
 
-#server-avatar {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
+	.server-text {
+	  font-size: 10px;
+	  font-family: var(--ff-poppins);
+	  margin-top: 10px;
+	}	
 
-.server-text {
-	font-size: 10px;
-	font-family: var(--ff-poppins);
-	margin-top: 10px;
-}
+	.card-left {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+	}
 
-.card-left {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-}
+	.card-username-container {
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+	}
+	
+	.user-name {
+	  font-size: 1.4rem;
+	  font-weight: bold;
+	  margin-right: auto;
+	  flex-shrink: 0;
+	  font-family: var(--ff-poppins);
+	}
 
-.card-username-container {
-    display: flex;
-    flex-direction: column; /* Empile les éléments verticalement */
-    margin-left: 10px;
-}
+	.user-remaining-time {
+      color: #3d434d;
+      font-weight: normal;
+      font-size: 1.2rem;
+	  font-family: var(--ff-poppins);
+	}
 
-.user-name {
-font-size: 1.4rem;
-  font-weight: bold;
-  margin-right: auto;
-  flex-shrink: 0;
-font-family: var(--ff-poppins);
-}
+	.card-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+	}
 
-.user-remaining-time {
-    color: #3d434d;
-    font-weight: normal;
-    font-size: 1.2rem;
-	font-family: var(--ff-poppins);
-}
+	.date-label {
+	  display: block;
+	  font-size: 0.9rem;
+	  color: #3d434d;
+	  font-weight: bold;
+	  font-family: var(--ff-poppins);
+	}
 
-.card-right {
-    display: flex;
-    flex-direction: column; /* Empile le label et la date */
-    align-items: center;
-}
+	.user-birthday {
+	  font-size: 1.4rem;
+	  font-weight: bold;
+	  margin-right: auto;
+	  flex-shrink: 0;
+	  font-family: var(--ff-poppins);
+	}
 
-.date-label {
-display: block;
-  font-size: 0.9rem;
-  color: #3d434d;
-  font-weight: bold;
-  font-family: var(--ff-poppins);
-}
+	.card-rank {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-right: 15px;
+      border: 1px solid #303240;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+	  font-family: var(--ff-poppins);
+	}
 
-.user-birthday {
-font-size: 1.4rem;
-  font-weight: bold;
-  margin-right: auto;
-  flex-shrink: 0;
-  font-family: var(--ff-poppins);
-}
+	img {
+      border-radius: 100%;
+	}
 
-.card-rank {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-right: 15px;
-    border: 1px solid #303240;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-	font-family: var(--ff-poppins);
-}
+	.card-content {
+      align-items: center;
+      margin-left: 15px;
+	}
 
-img {
-    border-radius: 100%;
-}
+	.card-date {
+      align-items: center;
+      margin-left: 15px;
+	  justify-content: center;
+	}
 
-.card-content {
-    align-items: center; /* Aligne les éléments sur la même ligne */
-    margin-left: 15px; /* Ajoute de l'espace entre l'avatar et le texte */
-}
+	.card-username {
+	  display: flex;
+      font-size: 1.4rem;
+      margin-right: 10px;
+	  align-items: center;
+	}
 
-.card-date {
-    align-items: center;
-    margin-left: 15px;
-	justify-content: center;
-}
+	.card-birthday-date {
+      font-size: 1.2rem;
+      color: #3d434d;
+	}
 
-.card-username {
-	display: flex;
-    font-size: 1.4rem;
-    margin-right: 10px;
-	align-items: center;
-}
+	.card-info {
+	  display: flex;
+      font-size: 1.2rem;
+      color: #3d434d;
+      margin-top: 5px;
+	}
 
-.card-birthday-date {
-    font-size: 1.2rem;
-    color: #3d434d;
-}
+	.card-info div {
+      margin-bottom: 5px;
+	}
 
+	.card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      flex-wrap: nowrap;
+	}
 
+	.card-date, .card-age, .card-remaining-time {
+      text-align: center;
+      flex-shrink: 0;
+	}
 
-.card-info {
-  display: flex;
-    font-size: 1.2rem;
-    color: #3d434d;
-    margin-top: 5px;
-}
+	.card-age {
+      margin-right: 20px;
+	}
 
-.card-info div {
-    margin-bottom: 5px;
-}
+	.card-remaining-time {
+      margin-left: 0;
+	}
 
-.card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    flex-wrap: nowrap;
-}
+	.user-date span, .card-age span, .card-remaining-time span {
+      display: block;
+      font-size: 0.9rem;
+      color: #3d434d;
+	}
 
-.card-date, .card-age, .card-remaining-time {
-    text-align: center;
-    flex-shrink: 0;
-}
+	.card-birthday.first-place {
+      position: relative;
+      border-radius: 25px;
+      margin-bottom: 12px;
+	}
 
-.card-age {
-    margin-right: 20px;
-}
-
-.card-remaining-time {
-    margin-left: 0;
-}
-
-.user-date span, .card-age span, .card-remaining-time span {
-    display: block;
-    font-size: 0.9rem;
-    color: #3d434d;
-}
-
-.card-birthday.first-place {
-    position: relative;
-    border-radius: 25px;
-    margin-bottom: 12px;
-}
-
-.card-birthday.first-place::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 27px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 30px;
-    padding-right: 30px;
-    background: linear-gradient(200deg, 
+	.card-birthday.first-place::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 27px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-left: 30px;
+      padding-right: 30px;
+      background: linear-gradient(200deg, 
         #f5f5f5, /* Blanc cassé */
 		#f5f5f5, /* Blanc cassé */
         #b0b0b0, /* Blanc foncé */
@@ -810,51 +799,51 @@ img {
         #b0b0b0, /* Blanc foncé */
         #f5f5f5, /* Blanc cassé */
         #f5f5f5 /* Blanc cassé */
-    );
-    z-index: -1;
-}
+      );
+      z-index: -1;
+	}
+		
+	.card-birthday .content {
+      position: relative;
+      z-index: 1;
+	}
 
-.card-birthday .content {
-    position: relative;
-    z-index: 1; /* Assure que le contenu de la carte soit au-dessus de la bordure dégradée */
-}
+	#server-avatar img {
+      width: 50px;
+      height: 50px;
+	  border-radius: 50%;
+	}
 
-#server-avatar img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
+	#error {
+      background: linear-gradient(200deg, var(--button-change-header), var(--button-change-header1));
+      padding: 40px;
+      border-radius: 35px;
+      align-items: center;
+      font-family: var(--ff-poppins);
+	}
 
-#error {
-    background: linear-gradient(200deg, var(--button-change-header), var(--button-change-header1));
-    padding: 40px;
-    border-radius: 35px;
-    align-items: center;
-    font-family: var(--ff-poppins);
-}
+	#error h2 {
+      margin-bottom: 20px;
+      color: #FFF;
+	}
 
-#error h2 {
-    margin-bottom: 20px;
-    color: #FFF;
-}
+	#error p, #error ul {
+      line-height: 1.5;
+      margin: 10px 0;
+	}
 
-#error p, #error ul {
-    line-height: 1.5;
-    margin: 10px 0;
-}
+	#error ul {
+      padding-left: 20px;
+	}
 
-#error ul {
-    padding-left: 20px;
-}
+	#error li {
+      margin-bottom: 8px;
+	}
 
-#error li {
-    margin-bottom: 8px;
-}
-
-.error-leader {
-    display: flex;
-    justify-content: center;
-}
+	.error-leader {
+      display: flex;
+	  justify-content: center;
+	}
 
 </style>
 
